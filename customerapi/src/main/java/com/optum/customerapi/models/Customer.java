@@ -27,5 +27,4 @@ public class Customer {
     @Column(name="Contact_No")
     private long contactNo;
 
-
 }
