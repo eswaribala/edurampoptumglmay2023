@@ -27,8 +27,8 @@ public class IndividualMutation implements GraphQLMutationResolver {
                 individualInput.getEmail(),
                 individualInput.getPassword(),
                 individualInput.getContactNo(),
-
-                Gender.valueOf(individualInput.getGender()),
+                individualInput.getGender(),
+                //Gender.valueOf(individualInput.getGender()),
                 LocalDate.parse(individualInput.getDob())));
 
     }
@@ -40,8 +40,8 @@ public class IndividualMutation implements GraphQLMutationResolver {
                 individualInput.getEmail(),
                 individualInput.getPassword(),
                 individualInput.getContactNo(),
-
-                Gender.valueOf(individualInput.getGender()),
+                individualInput.getGender(),
+             //   Gender.valueOf(individualInput.getGender()),
                 LocalDate.parse(individualInput.getDob())));
 
     }

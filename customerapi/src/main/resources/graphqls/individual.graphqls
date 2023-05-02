@@ -25,17 +25,21 @@ type Individual implements Customer{
     contactNo: Int
     email: String
     password: String
-    gender: String
+    gender: Gender
     dob: String
 }
-
+enum Gender{
+    MALE
+    FEMALE
+    TRANSGENDER
+}
 input IndividualInput{
     accountNo: ID!
     name: FullNameInput
     contactNo: Int
     email: String
     password: String
-    gender: String
+    gender: Gender
     dob: String
 }
 

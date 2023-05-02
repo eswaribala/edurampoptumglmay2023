@@ -10,5 +10,5 @@ public class IndividualInput {
     private String	password;
     private long contactNo;
     private String dob;
-    private String gender;
+    private Gender gender;
 }
