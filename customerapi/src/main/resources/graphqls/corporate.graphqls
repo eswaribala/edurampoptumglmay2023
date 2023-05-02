@@ -1,0 +1,30 @@
+type Corporate implements Customer{
+    accountNo: ID!
+    name: FullName
+    email: String
+    password: String
+    contactNo: Int
+    companyType:String
+}
+
+
+input CorporateInput{
+    accountNo: ID!
+    name: FullNameInput
+    email: String
+    password: String
+    contactNo: Int
+    companyType:String
+}
+
+
+extend type Query {
+    findAllCorporates:[Corporate]
+    findCorporate(customerId: ID):Corporate
+}
+
+extend type Mutation {
+    addCorporate(corporateInput: CorporateInput): Corporate
+    updateCorporate(corporateInput: CorporateInput): Corporate
+    deleteCorporate(accountNo: Int): Boolean
+}
