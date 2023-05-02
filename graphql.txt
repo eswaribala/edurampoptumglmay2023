@@ -1,0 +1,48 @@
+mutation($individualInput:IndividualInput!){
+  addIndividual(individualInput:$individualInput){
+   
+    accountNo
+  }
+}
+
+{
+  "individualInput": {
+    "accountNo": 0,
+    "name": {
+      "firstName": "Vidya",
+      "lastName": "Raj",
+      "middleName": ""
+    },
+    "contactNo": 9152032,
+    "email": "vidyaraj@gmail.com",
+    "gender": "FEMALE",
+    "dob": "1988-12-02",
+    "password": "Test@123"
+  }
+}
+
+
+query($firstName:String){
+  findAllIndividuals{
+    name{
+      firstName,
+      lastName
+    }
+  },
+  findIndividualByName(firstName:$firstName){
+    accountNo
+  }
+  
+}
+
+{
+  "firstName": "Parameswari"
+}
+
+mutation($accountNo:Int){
+  deleteIndividual(accountNo:$accountNo)
+}
+
+{
+  "accountNo": 2
+}
