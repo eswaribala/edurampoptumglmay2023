@@ -24,4 +24,10 @@ public class Individual extends Customer{
    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
    @Column(name="DOB")
     private LocalDate dob;
+
+    public Individual(long accountNo, FullName name, String email, String password, long contactNo, Gender gender, LocalDate dob) {
+        super(accountNo, name, email, password, contactNo);
+        this.gender = gender;
+        this.dob = dob;
+    }
 }
