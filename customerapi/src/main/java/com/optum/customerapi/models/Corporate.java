@@ -20,4 +20,9 @@ public class Corporate extends Customer{
     @Enumerated(EnumType.STRING)
     @Column(name="Company_Type")
     private CompanyType companyType;
+
+    public Corporate(long accountNo, FullName name, String email, String password, long contactNo, CompanyType companyType) {
+        super(accountNo, name, email, password, contactNo);
+        this.companyType = companyType;
+    }
 }

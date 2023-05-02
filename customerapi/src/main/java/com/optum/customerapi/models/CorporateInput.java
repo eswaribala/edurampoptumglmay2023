@@ -1,5 +1,8 @@
 package com.optum.customerapi.models;
 
+import lombok.Data;
+
+@Data
 public class CorporateInput {
     private long accountNo;
     private FullNameInput name;
@@ -8,4 +11,6 @@ public class CorporateInput {
     private long contactNo;
     private String dob;
     private String companyType;
+
+
 }
