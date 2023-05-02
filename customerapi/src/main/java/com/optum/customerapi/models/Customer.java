@@ -3,6 +3,7 @@ package com.optum.customerapi.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -11,6 +12,8 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Customer {
 
     @Id
