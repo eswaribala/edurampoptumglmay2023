@@ -30,8 +30,8 @@ public class CorporateMutation implements GraphQLMutationResolver {
     public Corporate updateCorporate(CorporateInput corporateInput){
         return this.CorporateService.updateCorporate(new Corporate(0,new FullName(
                 corporateInput.getName().getFirstName(),
-                corporateInput.getName().getMiddleName(),
-                corporateInput.getName().getLastName()),
+                corporateInput.getName().getLastName(),
+                corporateInput.getName().getMiddleName()),
                 corporateInput.getEmail(),
                 corporateInput.getPassword(),
                 corporateInput.getContactNo(),

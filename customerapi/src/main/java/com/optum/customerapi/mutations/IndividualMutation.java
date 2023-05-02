@@ -22,8 +22,8 @@ public class IndividualMutation implements GraphQLMutationResolver {
 
         return this.individualService.addIndividual(new Individual(0,new FullName(
                 individualInput.getName().getFirstName(),
-                individualInput.getName().getMiddleName(),
-                individualInput.getName().getLastName()),
+                individualInput.getName().getLastName(),
+                individualInput.getName().getMiddleName()),
                 individualInput.getEmail(),
                 individualInput.getPassword(),
                 individualInput.getContactNo(),
