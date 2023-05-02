@@ -20,7 +20,8 @@ input CorporateInput{
 
 extend type Query {
     findAllCorporates:[Corporate]
-    findCorporate(customerId: ID):Corporate
+    findCorporateById(accountNo: ID):Corporate
+    findCorporateByName(firstName: String):[Corporate]
 }
 
 extend type Mutation {
