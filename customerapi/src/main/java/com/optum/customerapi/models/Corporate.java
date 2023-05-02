@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Individual")
+@Table(name="Corporate")
 @SuperBuilder
 @Data
 @AllArgsConstructor
