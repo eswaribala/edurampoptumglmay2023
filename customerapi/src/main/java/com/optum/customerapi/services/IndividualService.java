@@ -31,7 +31,7 @@ public class IndividualService {
     }
 
     //select by firstname
-    public List<Individual> getIndividualById(String firstName){
+    public List<Individual> getIndividualByFirstName(String firstName){
         return this.individualRepo.findByFirstName(firstName);
     }
 

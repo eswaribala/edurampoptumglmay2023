@@ -34,7 +34,7 @@ public class CorporateService {
     }
 
     //select by firstname
-    public List<Corporate> getCorporateById(String firstName){
+    public List<Corporate> getCorporateByFirstName(String firstName){
         return this.corporateRepo.findByFirstName(firstName);
     }
 
