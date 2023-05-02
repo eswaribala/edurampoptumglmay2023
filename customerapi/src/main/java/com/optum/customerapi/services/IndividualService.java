@@ -3,9 +3,10 @@ package com.optum.customerapi.services;
 import com.optum.customerapi.models.Individual;
 import com.optum.customerapi.repositories.IndividualRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class IndividualService {
     @Autowired
     private IndividualRepo individualRepo;
