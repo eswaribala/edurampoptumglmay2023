@@ -2,7 +2,10 @@ package com.optum.messagedgs.fetchers;
 
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsQuery;
-import com.optum.messagedgs.models.Message;
+
+import com.optum.graphqlmusicstoremaven.generated.types.Message;
+import net.datafaker.Faker;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.ArrayList;
@@ -11,8 +14,9 @@ import java.util.Random;
 
 @DgsComponent
 public class MessageFetcher {
-
-
+@Autowired
+    private Faker faker;
+    private List<Message> messageList=new ArrayList<Message>();
 
 @DgsQuery
  public List<Message> showMessages(){
@@ -21,15 +25,15 @@ public class MessageFetcher {
 
  @DgsQuery
  public Message showMessage(int id){
-   return getMessages().stream().filter(x->x.getId()==id).findFirst().orElse(null);
+   return getMessages().stream().filter(x->x.getId() <= id).findFirst().orElse(null);
  }
 
  private List<Message> getMessages(){
-     List<Message> messageList=  List.of(new Message(new Random().nextInt(1000000),"M1"),
-             new Message(new Random().nextInt(1000000),"M2"),
-             new Message(new Random().nextInt(1000000),"M3"),
-     new Message(new Random().nextInt(1000000),"M4"),
-             new Message(new Random().nextInt(1000000),"M5"));
+   
+     for(int i=0;i<100;i++) {
+         var messageObj = Message.newBuilder().id(faker.random().nextInt(10000)).info(faker.country().name()).build();
+         messageList.add(messageObj);
+     }
      return messageList;
  }
 
