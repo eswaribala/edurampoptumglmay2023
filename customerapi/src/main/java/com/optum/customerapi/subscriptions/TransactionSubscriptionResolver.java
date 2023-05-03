@@ -5,11 +5,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.optum.customerapi.dto.TransactionDTO;
 import com.optum.customerapi.facades.TransactionFacade;
+import com.optum.customerapi.models.IndividualContactNo;
 import com.optum.customerapi.services.TransactionConsumerService;
 import lombok.extern.slf4j.Slf4j;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Component
 @Slf4j
@@ -17,14 +23,14 @@ public class TransactionSubscriptionResolver implements GraphQLSubscriptionResol
 @Autowired
  private TransactionConsumerService transactionConsumerService;
 
-    public TransactionDTO showTransaction(){
+    public Publisher<TransactionDTO> showTransaction(){
 
         log.info("Transaction Received" + transactionConsumerService.transactionDTO);
 
-       if(transactionConsumerService.transactionDTO!=null)
-        return transactionConsumerService.transactionDTO;
-       else
-           return null;
+        return Flux.interval(Duration.ofSeconds(5))
+                .map(num -> transactionConsumerService.transactionDTO);
+
+
     }
 
 
