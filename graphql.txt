@@ -46,3 +46,36 @@ mutation($accountNo:Int){
 {
   "accountNo": 2
 }
+
+
+subscription($accountNo:Int){
+  individualContactNo(accountNo:$accountNo){
+    accountNo
+    contactNo
+    timestamp
+  }
+}
+
+{
+  "accountNo": 1
+}
+
+
+query($firstName:String){
+  searchByFirstName(firstName:$firstName){
+    __typename
+    
+    ... on Individual{
+      gender
+    }
+    
+    ... on Corporate{
+      companyType
+    }
+    
+  }
+}
+
+{
+  "firstName": "Optum"
+}
