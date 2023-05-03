@@ -79,3 +79,20 @@ query($firstName:String){
 {
   "firstName": "Optum"
 }
+
+query{
+  showMessages{
+    id
+    info
+  }
+}
+
+query($id:Int){
+  showMessage(id:$id){
+    info
+  }
+ 
+}
+{
+  "id": 7985
+}
