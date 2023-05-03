@@ -5,31 +5,26 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.optum.customerapi.dto.TransactionDTO;
 import com.optum.customerapi.facades.TransactionFacade;
+import com.optum.customerapi.services.TransactionConsumerService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 public class TransactionSubscriptionResolver implements GraphQLSubscriptionResolver {
+@Autowired
+ private TransactionConsumerService transactionConsumerService;
 
-    private ObjectMapper objectMapper;
-    private TransactionDTO transactionDTO;
+    public TransactionDTO showTransaction(){
 
-    @StreamListener(target = TransactionFacade.inChannel)
+        log.info("Transaction Received" + transactionConsumerService.transactionDTO);
 
-    public TransactionDTO showTransactions(String message){
-        log.info("Transaction Received" + message);
-
-        objectMapper = new ObjectMapper();
-        try {
-            transactionDTO = objectMapper.readValue(message, TransactionDTO.class);
-            log.info("Java Object" + transactionDTO);
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return transactionDTO;
+       if(transactionConsumerService.transactionDTO!=null)
+        return transactionConsumerService.transactionDTO;
+       else
+           return null;
     }
 
 
