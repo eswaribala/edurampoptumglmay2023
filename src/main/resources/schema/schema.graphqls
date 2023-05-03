@@ -1,0 +1,9 @@
+type Message{
+    id: Int
+    info: String
+}
+
+type Query{
+    showMessages:[Message]
+    showMessage(id: Int):Message
+}
