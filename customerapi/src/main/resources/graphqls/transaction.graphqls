@@ -1,0 +1,11 @@
+type TransactionDTO{
+  transactionId: ID!
+  amount: Float
+  timeStamp: String
+    sender: String
+    receiver: String
+}
+
+extend type Subscription {
+    showTransaction(message:String):TransactionDTO
+}
