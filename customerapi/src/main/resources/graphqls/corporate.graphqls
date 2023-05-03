@@ -1,4 +1,4 @@
-type Corporate implements Customer{
+type Corporate{
     accountNo: ID!
     name: FullName
     email: String

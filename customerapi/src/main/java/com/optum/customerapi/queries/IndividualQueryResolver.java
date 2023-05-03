@@ -1,6 +1,7 @@
 package com.optum.customerapi.queries;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+import com.optum.customerapi.models.Customer;
 import com.optum.customerapi.models.Individual;
 import com.optum.customerapi.services.IndividualService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ public class IndividualQueryResolver implements GraphQLQueryResolver {
 
     @Autowired
     private IndividualService individualService;
+
     public List<Individual> findAllIndividuals(){
           return this.individualService.getAllIndividuals();
     }
@@ -24,6 +26,7 @@ public class IndividualQueryResolver implements GraphQLQueryResolver {
 
         return this.individualService.getIndividualByFirstName(firstName);
     }
+
 
 
 }
