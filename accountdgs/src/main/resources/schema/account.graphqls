@@ -15,9 +15,10 @@ input AccountInput{
     accountId:ID!
     runningTotal:Int
     openDate: String
+    transactions:[TransactionInput]
 }
 type Mutation{
-    addAccount(account:AccountInput!):Account
+    addAccount(accountInput:AccountInput!):Account
 }
 
 schema {
