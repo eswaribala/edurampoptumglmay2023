@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import EmployeeList from "./Pages/EmployeeList";
+import TransactionList from "./Pages/TransactionList";
 import CreateEmployee from "./Pages/CreateEmployee";
 import CreateEmployeeSubscription from "./Pages/CreateEmployeeSubscription";
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
     <CreateEmployee/>
-    <EmployeeList/>
+    <TransactionList/>
     <CreateEmployeeSubscription/>
     </div>
   );
