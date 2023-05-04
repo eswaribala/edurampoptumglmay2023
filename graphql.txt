@@ -96,3 +96,63 @@ query($id:Int){
 {
   "id": 7985
 }
+===================================
+mutation($accountInput:AccountInput!){
+  addAccount(accountInput:$accountInput){
+    accountId
+    transactions{
+      amount
+    }
+    
+  }
+}
+{
+  "accountInput": {
+    "accountId": "2",
+    "runningTotal": 49369,
+    "openDate": "2023-01-01",
+    "transactions": [{
+      "transactionId": "123",
+      "amount": 560,
+      "timeStamp": "2023-02-02",
+      "sender": "Parameswari",
+      "receiver": "Vignesh"
+    },
+    {
+      "transactionId": "124",
+      "amount": 2000,
+      "timeStamp": "2023-03-02",
+      "sender": "Parameswari",
+      "receiver": ""
+    }]
+  }
+}
+mutation($transactionInput:TransactionInput!){
+  addTransaction(transactionInput:$transactionInput){
+    amount
+    account{
+      accountId
+    }
+    
+  }
+}
+
+{
+  "transactionInput": {
+    "transactionId": "45",
+    "amount": 600,
+    "timeStamp": "2023-04-01",
+    "sender": "Vignesh",
+    "receiver": "Parameswari",
+    "account": {
+      "accountId": 1
+    }
+  }
+}
+
+
+
+
+
+
+
