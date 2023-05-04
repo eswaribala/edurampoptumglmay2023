@@ -7,10 +7,10 @@ type Transaction{
     account: Account
 }
 
-#extend type Query {
-#    showTransactions:[Transaction]
-#    showTransaction(transactionId: ID!): Transaction
-#}
+extend type Query {
+    showTransactions:[Transaction]
+    showTransaction(transactionId: ID!): Transaction
+}
 
 input TransactionInput{
     transactionId: ID!
@@ -20,6 +20,6 @@ input TransactionInput{
     receiver:String
     account: AccountInput
 }
-#extend type Mutation {
-#    addTransaction(transaction: TransactionInput): Transaction
-#}
+extend type Mutation {
+    addTransaction(transactionInput: TransactionInput): Transaction
+}

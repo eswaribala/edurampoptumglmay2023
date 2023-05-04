@@ -20,8 +20,3 @@ input AccountInput{
 type Mutation{
     addAccount(accountInput:AccountInput!):Account
 }
-
-schema {
-   # query: Query
-    mutation: Mutation
-}
