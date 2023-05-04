@@ -1,0 +1,64 @@
+
+RestTemplate restTemplate = restTemplate();
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Authorization", "Bearer *************");
+    headers.add("content-type", "application/json"); // just modified graphql into json
+
+    String query1 = "{\n" +
+            "  \"query\": query {\n" +
+            "    \"locationTypes\": {\n" +
+            "      \"edges\": \n" +
+            "        {\n" +
+            "          \"node\": \n" +
+            "        {\n" +
+            "          \"name\"\n" +
+            "        }\n" +
+            "        }\n" +
+            "    }\n" +
+            "  }\n" +
+            "}";
+
+    String URL = "https://staging.joinswoop.com/graphql";
+
+    ResponseEntity<String> response = restTemplate.postForEntity(URL, new HttpEntity<>(query1, headers), String.class);
+  System.out.println("The response================="+response);
+}
+
+
+@Component
+class MyClass {
+  
+  private final GraphQLWebClient graphQLWebClient;
+  
+  MyClass(GraphQLWebClient graphQLWebClient) {
+    this.graphQLWebClient = graphQLWebClient;
+  }
+  
+  String helloWorld() {
+    GraphQLRequest request = GraphQLRequest.builder().query("query { hello }").build();
+    GraphQLResponse response = graphQLWebClient.post(request).block();
+    return response.get("hello", String.class);
+  }
+}
+
+import com.apollographql.apollo3.cache.normalized.NormalizedCache;
+import com.apollographql.apollo3.cache.http.HttpCache;
+// (...)
+
+ApolloClient.Builder builder = new ApolloClient.Builder()
+  .serverUrl("http://localhost:4000/graphql")
+
+// Optionally, set an http cache
+HttpCache.configureApolloClientBuilder(builder, cacheDirectory, cacheMaxSize);
+
+// Optionally, set a normalized cache
+NormalizedCache.configureApolloClientBuilder(
+  builder,
+  new MemoryCacheFactory(10 * 1024 * 1024, -1),
+  TypePolicyCacheKeyGenerator.INSTANCE,
+  FieldPolicyCacheResolver.INSTANCE,
+  false
+);
+
+ApolloClient client = builder.build();
