@@ -7,19 +7,29 @@ import com.optum.accountdgs.models.TransactionInput;
 import com.optum.accountdgs.repositories.AccountRepository;
 import com.optum.accountdgs.repositories.TransactionRepository;
 import graphql.schema.DataFetchingEnvironment;
+import lombok.extern.slf4j.Slf4j;
 import org.dataloader.DataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpHeaders;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @DgsComponent
+@Slf4j
 public class TransactionDataFetcher {
 
     @Autowired
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @DgsQuery
     public List<Transaction> showTransactions(){
@@ -29,6 +39,17 @@ public class TransactionDataFetcher {
 
     @DgsQuery
     public Transaction showTransaction(@InputArgument("transactionId") String transactionId){
+
+       HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        //headers.set("Authorization", "Bearer "+token);
+
+        HttpEntity request = new HttpEntity<String>(null,headers);
+
+        ResponseEntity<String> responseEntityStr = restTemplate.
+                exchange("https://jsonplaceholder.typicode.com/photos/"+transactionId, HttpMethod.GET, request,
+                        String.class);
+          log.info(responseEntityStr.getBody());
 
         return this.transactionRepository.findById(transactionId).orElse(null);
     }
