@@ -1,0 +1,26 @@
+type Account{
+    accountId: ID!
+    runningTotal: Int
+    openDate: String
+    transactions: [Transaction]
+
+}
+
+type Query{
+    showAccounts:[Account]
+    showAccount(accountNo: ID!):Account
+}
+
+input AccountInput{
+    accountId:ID!
+    runningTotal:Int
+    openDate: String
+}
+type Mutation{
+    addAccount(account:AccountInput!):Account
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

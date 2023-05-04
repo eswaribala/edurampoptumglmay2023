@@ -1,0 +1,24 @@
+type Transaction{
+    transactionId: ID!
+    amount: Int
+    timeStamp: String
+    sender: String
+    receiver:String
+    account: Account
+}
+
+extend type Query {
+    showTransactions:[Transaction]
+    showTransaction(transactionId: ID!): Transaction
+}
+
+input TransactionInput{
+    transactionId: ID!
+    amount: Int
+    timeStamp: String
+    sender: String
+    receiver:String
+}
+extend type Mutation {
+    addTransaction(transaction: TransactionInput): Transaction
+}
