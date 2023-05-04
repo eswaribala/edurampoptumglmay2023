@@ -1,17 +1,17 @@
 package com.optum.accountdgs.datafetchers;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsMutation;
-import com.netflix.graphql.dgs.DgsQuery;
-import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.*;
 import com.optum.accountdgs.models.Account;
 import com.optum.accountdgs.models.Transaction;
 import com.optum.accountdgs.models.TransactionInput;
 import com.optum.accountdgs.repositories.AccountRepository;
 import com.optum.accountdgs.repositories.TransactionRepository;
+import graphql.schema.DataFetchingEnvironment;
+import org.dataloader.DataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @DgsComponent
 public class TransactionDataFetcher {
@@ -32,6 +32,16 @@ public class TransactionDataFetcher {
 
         return this.transactionRepository.findById(transactionId).orElse(null);
     }
+
+
+
+    @DgsData(parentType = "Transaction", field = "account")
+    public CompletableFuture<Account> account(DataFetchingEnvironment dfe) {
+        DataLoader<String,Account> dataLoader = dfe.getDataLoader("accounts");
+        Transaction transaction = dfe.getSource();
+        return dataLoader.load(transaction.getAccount().getAccountId());
+    }
+
 
     @DgsMutation
     public Transaction  addTransaction(@InputArgument("transactionInput")TransactionInput transactionInput){
