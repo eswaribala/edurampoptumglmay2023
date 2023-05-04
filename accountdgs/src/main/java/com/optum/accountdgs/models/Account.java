@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,6 +24,7 @@ public class Account {
   @Column(name="Open_Date",nullable = false,length = 12)
   private String openDate;
   @OneToMany(fetch = FetchType.LAZY,mappedBy = "account")
+  //@JsonIgnore
   private List<Transaction> transactions;
 
 

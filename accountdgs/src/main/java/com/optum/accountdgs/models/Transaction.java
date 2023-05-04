@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
@@ -13,11 +14,10 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Table(name="Transaction")
-public class Transaction {
+public class Transaction{
   @Id
   @Column(name="Transaction_Id",nullable = false,length = 20)
   private String transactionId;
-  @Id
   @Column(name="Amount")
   private Integer amount;
   @Column(name="TimeStamp",nullable = false,length = 20)

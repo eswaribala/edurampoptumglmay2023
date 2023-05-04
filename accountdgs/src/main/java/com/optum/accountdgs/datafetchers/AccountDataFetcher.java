@@ -1,10 +1,11 @@
 package com.optum.accountdgs.datafetchers;
 
 import com.netflix.graphql.dgs.*;
-import com.optum.accountdgs.generated.types.AccountInput;
-import com.optum.accountdgs.generated.types.TransactionInput;
+
 import com.optum.accountdgs.models.Account;
+import com.optum.accountdgs.models.AccountInput;
 import com.optum.accountdgs.models.Transaction;
+import com.optum.accountdgs.models.TransactionInput;
 import com.optum.accountdgs.repositories.AccountRepository;
 import com.optum.accountdgs.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class AccountDataFetcher {
 
     @Autowired
     private AccountRepository accountRepository;
-    @Autowired
+   @Autowired
     private TransactionRepository transactionRepository;
 
     @DgsQuery
@@ -47,13 +48,29 @@ public class AccountDataFetcher {
 
     @DgsMutation
     public Account addAccount(@InputArgument("accountInput") AccountInput accountInput){
+
         Account account = Account.builder()
                 .accountId(accountInput.getAccountId())
                 .openDate(accountInput.getOpenDate())
                 .runningTotal(accountInput.getRunningTotal())
-                .transactions(mapAccountTransactions(accountInput.getTransactions()))
                 .build();
         Account accountResponse = accountRepository.save(account);
+        if(accountInput.getTransactions().size()>0){
+            for(TransactionInput tran : accountInput.getTransactions()){
+                Transaction transaction = Transaction.builder()
+                        .transactionId(tran.getTransactionId())
+                        .amount(tran.getAmount())
+                        .sender(tran.getSender())
+                        .receiver(tran.getReceiver())
+                        .timeStamp(tran.getTimeStamp())
+                        .account(account)
+                        .build();
+               this.transactionRepository.save(transaction);
+            }
+        }
+
+        accountResponse.setTransactions(mapAccountTransactions(accountInput.getTransactions()));
+
         return accountResponse;
     }
 
