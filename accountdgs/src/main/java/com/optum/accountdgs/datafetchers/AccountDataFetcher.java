@@ -1,16 +1,15 @@
 package com.optum.accountdgs.datafetchers;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsMutation;
-import com.netflix.graphql.dgs.DgsQuery;
-import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.*;
 import com.optum.accountdgs.generated.types.AccountInput;
 import com.optum.accountdgs.generated.types.TransactionInput;
 import com.optum.accountdgs.models.Account;
 import com.optum.accountdgs.models.Transaction;
 import com.optum.accountdgs.repositories.AccountRepository;
+import com.optum.accountdgs.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,15 +18,31 @@ public class AccountDataFetcher {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @DgsQuery
     public List<Account> showAccounts(){
 
+        return this.accountRepository.findAll();
+
+    }
+
+    @DgsData(parentType = "Account", field = "transactions")
+    public List<Transaction> transactions(DgsDataFetchingEnvironment dgsDataFetchingEnvironment) {
+        Account account = dgsDataFetchingEnvironment.getSource();
+        List<Transaction> transactionsList = new ArrayList<>();
+        for (Transaction transaction : account.getTransactions()) {
+            Transaction transactionResponse = transactionRepository.findById(transaction.getTransactionId()).get();
+            transactionsList.add(transactionResponse);
+        }
+        return transactionsList;
     }
 
     @DgsQuery
     public Account showAccount(@InputArgument("accountNo") String accountNo){
 
+        return this.accountRepository.findById(accountNo).orElse(null);
     }
 
     @DgsMutation
